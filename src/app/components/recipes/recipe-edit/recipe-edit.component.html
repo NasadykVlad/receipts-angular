@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-xs-12">
+          <button  [disabled]="!f.valid" type="submit" class="btn btn-success">Save</button>
+          <button (click)="redirectToRecipe()" type="button" class="btn btn-danger">Cancel</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" ngModel
+                   id="name"
+                   required
+                   class="form-control"
+                   name="name">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <input type="text" ngModel
+                   #e
+                   (input)="changeImgUrl(e)"
+                   id="imagePath"
+                   required
+                   class="form-control"
+                   name="imagePath">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="recipeEditItem" class="row">
+        <div class="col-xs-12">
+          <img [src]="recipeEditItem.imagePath" style="max-height: 150px" class="img-responsive" alt="">
+        </div>
+      </div>
+
+      <div *ngIf="newImageLink" class="row">
+        <div class="col-xs-12">
+          <img [src]="newImageLink" style="max-height: 150px" class="img-responsive" alt="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea rows="6" ngModel
+                      id="description"
+                      required
+                      class="form-control"
+                      name="description">
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="recipeEditItem" style="margin: 10px 0">
+      <button (click)="addNewIngredientField()" class="btn btn-default">New Ingredient</button>
+    </div>
+
+    <div *ngIf="recipeEditItem" class="row">
+      <div class="col-xs-12" *ngFor="let ingredient of recipeEditItem.ingredients; let i = index">
+        <div style="margin-bottom: 10px" class="row">
+          <div class="col-xs-8">
+            <input name="text" [value]="ingredient.name" type="text" class="form-control">
+          </div>
+          <div class="col-xs-2">
+            <input name="number" [value]="ingredient.amount" type="number" class="form-control">
+          </div>
+          <div class="col-xs-2">
+            <button (click)="deleteIngredient(i)" class="btn btn-danger">X</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="recipeEditItem" class="row">
+      <div *ngFor="let ingredient of newIngredients" class="col-xs-12">
+        <div style="margin-bottom: 10px" class="row">
+          <form>
+            <div class="col-xs-8">
+              <input (input)="changeNewIgredient(ingredient.id)" [id]="'newField' + ingredient.id" [value]="ingredient.name" ngModel name="text" type="text" class="form-control">
+            </div>
+            <div class="col-xs-2">
+              <input (input)="changeNewIgredient(ingredient.id)" [id]="'newFieldAmount' + ingredient.id" [value]="ingredient.amount" ngModel name="number" type="number" class="form-control">
+            </div>
+            <div class="col-xs-2">
+              <button (click)="deleteNewIngredient(ingredient.id)" class="btn btn-danger">X</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!recipeEditItem" class="row">
+      <div class="col-xs-12">
+        <div style="margin-bottom: 10px" class="row">
+          <form (input)="change()" #fNew="ngForm">
+            <div class="col-xs-8">
+              <input ngModel name="text" type="text" class="form-control">
+            </div>
+            <div class="col-xs-2">
+              <input ngModel name="number" type="number" class="form-control">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
