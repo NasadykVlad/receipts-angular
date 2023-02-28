@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../../../shared/recipe.model";
 import {RecipeService} from "../../../services/recipe.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {DataStorageService} from "../../../services/data-storage.service";
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,12 +14,13 @@ export class RecipeListComponent implements OnInit {
   subscription;
 
   constructor(private recipeService: RecipeService,
+              private dataStorageService: DataStorageService,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
+    this.dataStorageService.fetchRecipes().subscribe();
 
     this.subscription = this.recipeService.recipesChanged
       .subscribe(

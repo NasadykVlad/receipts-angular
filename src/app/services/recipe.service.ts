@@ -14,22 +14,17 @@ export class RecipeService {
 
   private recipes: Recipe[] = [];
 
-  onFetchRecipes() {
-    this.http.get('https://ng-course-recipe-book-54745-default-rtdb.firebaseio.com/recipes.json')
-      .subscribe((res: Recipe[]) => {
-        this.recipes = res;
-        this.recipesChanged.next(this.recipes.slice());
-      })
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
   }
 
   getRecipes() {
-    this.onFetchRecipes()
-
-    return this.recipes.slice()
+    return this.recipes.slice();
   }
 
   getSelectedRecipe(id) {
-    return this.recipes[id];
+    return this.recipes[id] || this.recipes[0];
   }
 
   deleteIngredient(idIngredient, id) {
@@ -44,7 +39,11 @@ export class RecipeService {
   }
 
   deleteRecipe(id) {
-    this.recipes.splice(id, 1)
+    if (this.recipes.length === 1) {
+      this.recipes.splice(0, 1)
+    } else {
+      this.recipes.splice(id, 1)
+    }
     this.recipesChanged.next(this.recipes.slice());
   }
 

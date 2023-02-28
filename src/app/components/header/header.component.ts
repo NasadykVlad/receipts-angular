@@ -19,7 +19,7 @@ export class HeaderComponent {
   }
 
   fetchRecipes() {
-    this.recipeSerice.getRecipes()
+    this.dataStorageService.fetchRecipes().subscribe();
   }
 }
 
