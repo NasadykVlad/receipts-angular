@@ -1,0 +1,26 @@
+.errorNotice {
+  background: #ff0000;
+  color: white;
+  width: fit-content;
+  border-radius: 7px;
+  padding: 7px;
+  position: absolute;
+  right: 5px;
+  top: -40px;
+  opacity: 0.8;
+  animation: notice 2.8s;
+}
+
+@keyframes notice {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

@@ -18,6 +18,8 @@ import {SelectRecipeComponent} from './components/recipes/select-recipe/select-r
 import {RecipeEditComponent} from './components/recipes/recipe-edit/recipe-edit.component';
 import {HttpClientModule} from "@angular/common/http";
 import {DataStorageService} from "./services/data-storage.service";
+import { AuthComponent } from './components/auth/auth.component';
+import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {DataStorageService} from "./services/data-storage.service";
     ShoppingEditComponent,
     DropdownDirective,
     SelectRecipeComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
