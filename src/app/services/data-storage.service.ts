@@ -3,17 +3,20 @@ import {HttpClient} from "@angular/common/http";
 import {RecipeService} from "./recipe.service";
 import {Recipe} from "../shared/recipe.model";
 import {map, tap} from "rxjs";
+import {AuthService} from "./auth.service";
 
 @Injectable({providedIn: 'root'})
 export class DataStorageService {
 
-  constructor(private http: HttpClient, private recipesService: RecipeService) {
+  constructor(private http: HttpClient,
+              private recipesService: RecipeService,
+              private authService: AuthService) {
   }
 
   storeRecipes() {
     const recipes = this.recipesService.getRecipes()
 
-    this.http.delete('https://ng-course-recipe-book-54745-default-rtdb.firebaseio.com/recipes.json',)
+    this.http.delete('https://ng-course-recipe-book-54745-default-rtdb.firebaseio.com/recipes.json')
       .subscribe()
 
     this.http.put('https://ng-course-recipe-book-54745-default-rtdb.firebaseio.com/recipes.json',

@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {catchError, Subject, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, tap, throwError} from "rxjs";
 import {User} from "../shared/user.model";
+import {Router} from "@angular/router";
 
 export interface AuthResponseData {
   kind: string
@@ -16,9 +17,13 @@ export interface AuthResponseData {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  user = new Subject<User>()
+  user = new BehaviorSubject<User>(null)
+  private tokenExpirationTimer;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
   }
 
   signup(email, password) {
@@ -60,6 +65,36 @@ export class AuthService {
         }))
   }
 
+  logout() {
+    localStorage.removeItem('user')
+    this.user.next(null)
+    this.router.navigate(['/auth']).then()
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer)
+    }
+  }
+
+  autoLogin() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user) {
+      return
+    }
+
+    const loadedUser = new User(user.email, user.id, user._token, new Date(user._tokenExpirationDate))
+
+    if (loadedUser.token) {
+      const expirationDuration = new Date(user._tokenExpirationDate).getTime() - new Date().getTime()
+      this.autoLogout(expirationDuration)
+      this.user.next(loadedUser)
+    }
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout()
+    }, expirationDuration)
+  }
+
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000)
     const user = new User(
@@ -68,7 +103,9 @@ export class AuthService {
       token,
       expirationDate
     )
+    localStorage.setItem('user', JSON.stringify(user))
     this.user.next(user)
+    this.autoLogout(expiresIn * 1000)
   }
 
   private handleError({error}) {
