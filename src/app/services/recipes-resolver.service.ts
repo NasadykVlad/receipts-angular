@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 
 import { RecipeService } from './recipe.service';
-import {Recipe} from "../shared/recipe.model";
+import {Recipe} from "../models/recipe.model";
 import {DataStorageService} from "./data-storage.service";
 
 @Injectable({ providedIn: 'root' })

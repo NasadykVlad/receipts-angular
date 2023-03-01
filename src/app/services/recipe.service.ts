@@ -1,4 +1,4 @@
-import {Recipe} from "../shared/recipe.model";
+import {Recipe} from "../models/recipe.model";
 import {EventEmitter, Injectable} from "@angular/core";
 import {Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";

@@ -19,7 +19,7 @@ import {RecipeEditComponent} from './components/recipes/recipe-edit/recipe-edit.
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {DataStorageService} from "./services/data-storage.service";
 import {AuthComponent} from './components/auth/auth.component';
-import {LoadingSpinnerComponent} from "./shared/loading-spinner/loading-spinner.component";
+import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spinner.component";
 import {AuthInterceptorService} from "./services/auth-interceptor.service";
 
 @NgModule({

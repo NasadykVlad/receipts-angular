@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {RecipeService} from "../../../services/recipe.service";
-import {Recipe} from "../../../shared/recipe.model";
-import {Ingredient} from "../../../shared/ingredient.model";
+import {Recipe} from "../../../models/recipe.model";
+import {Ingredient} from "../../../models/ingredient.model";
 
 @Component({
   selector: 'app-recipe-edit',
